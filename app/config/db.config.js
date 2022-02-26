@@ -1,15 +1,3 @@
-const test = {
-
-}
-
-const prod = {
-
-}
-
-const dev = {
-
-}
-
 const connection = {
   test: {
     HOST: "localhost",
