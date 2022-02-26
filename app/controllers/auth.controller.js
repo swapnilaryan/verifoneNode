@@ -13,7 +13,7 @@ const signUp = (req, res) => {
   });
   user.save((err, user) => {
     if (err) {
-      res.status(500).send({ message: err });
+      res.status(500).send({ error: true, message: err });
       return;
     }
     res.send({ message: "User was registered successfully!" });
@@ -26,18 +26,18 @@ const signIn = (req, res) => {
   })
     .exec((err, user) => {
       if (err) {
-        res.status(500).send({ message: err });
+        res.status(500).send({ error: true, message: err });
         return;
       }
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({  error: true, message: "User Not found." });
       }
       const passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
       if (!passwordIsValid) {
-        return res.status(401).send({ message: "Invalid Password!" });
+        return res.status(401).send({  error: true, message: "Invalid Password!" });
       }
       const token = jwt.sign({ id: user.id }, authConfig.secret, {
         expiresIn: appConfig.JWT_EXPIRY,
@@ -47,6 +47,7 @@ const signIn = (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        accessToken: token
       });
     });
 };

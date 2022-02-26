@@ -13,7 +13,8 @@ if(process.env.NODE_ENV === "test") {
 
 const app = express();
 const corsOptions = {
-  origin: "http://localhost:8081"
+  credentials: true,
+  origin: "http://localhost:3000"
 };
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
