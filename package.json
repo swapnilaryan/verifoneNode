@@ -4,7 +4,7 @@
   "description": "test verifone ",
   "main": "server.js",
   "scripts": {
-    "start" : "node server.js",
+    "start": "node server.js",
     "test": "mocha ./tests/*.test.js --10"
   },
   "author": "swapnil",
