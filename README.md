@@ -9,7 +9,7 @@
 
 # For Development 
 ###Install and Start
-* make sure your mongo s running `mongod --dbpath <path to your data/db>`
+* make sure your mongo is running `mongod --dbpath <path to your data/db>`
 * `npm install`
 * `npm run dev`
 
