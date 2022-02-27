@@ -1,0 +1,26 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo:5.0.3
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data-node:/data/db
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=verifone_db
+  node:
+    depends_on:
+      - mongodb
+    build: ./
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    environment:
+      - DB_HOST=mongodb
+      - DB_NAME=verifone_db
+      - DB_PORT=27017
+      - NODE_ENV=docker
+    stdin_open: true
+    tty: true

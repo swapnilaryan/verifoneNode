@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha ./tests/*.test.js --10"
+    "dev": "export NODE_ENV=dev && npm run start",
+    "test": "export NODE_ENV=test && mocha ./tests/*.test.js --10 --exit"
   },
   "author": "swapnil",
   "license": "ISC",
@@ -15,7 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.3"
+    "mongoose": "^6.2.3",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "chai": "^4.3.6",

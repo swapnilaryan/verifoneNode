@@ -21,8 +21,6 @@ describe('Auth', () => {
     User.deleteMany({}, (err) => {
       done();
     });
-    // await db.mongoose.disconnect()
-    process.exit();
   });
 
   /*

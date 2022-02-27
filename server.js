@@ -5,11 +5,15 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 const fillProducts = require("./mock/fillProducts");
 const fillUsers = require("./mock/fillUsers");
+const path = require("path");
+
 const db = require("./app/models");
 
-if(process.env.NODE_ENV === "test") {
-  console.log = () => {};
-}
+// if(process.env.NODE_ENV === "test") {
+//   console.log = () => {};
+// }
+
+console.log(process.env)
 
 const app = express();
 const corsOptions = {
@@ -44,14 +48,15 @@ app.get("/healthCheck", (req, res) => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/product.routes')(app);
 let server = app;
+console.log("Mongo", `mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`)
 db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+ .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
   .then((db) => {
-    fillProducts(db);
     fillUsers(db);
+    fillProducts(db);
     console.log("Successfully connect to MongoDB.");
     // set port, listen for requests
     const PORT = process.env.PORT || 8080;
@@ -63,4 +68,11 @@ db.mongoose
     console.error("Connection error", err);
     process.exit();
   });
+
+app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "build/static")));
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname,  "build", "index.html"));
+});
+
 module.exports = server

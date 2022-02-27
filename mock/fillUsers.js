@@ -4,12 +4,12 @@ const appConfig = require("../app.config");
 const bcrypt = require("bcryptjs");
 const User = db.user;
 
-const fillUsers = (db) => {
-  db.mongoose.connection.db.listCollections().toArray((err, collections) => {
-    const userCollection = collections.find((item) => {
-      return item.name === "users";
-    })
-    if(!userCollection) {
+const fillUsers = () => {
+  User.find().exec((err, users) => {
+    if(err) {
+      return;
+    }
+    if(!users.length) {
       for(let i=0;i<mockUsers.length;i++) {
         const user = mockUsers[i];
         user.password = bcrypt.hashSync(user.password, appConfig.BCRYPT_SALT)
@@ -20,7 +20,7 @@ const fillUsers = (db) => {
         console.error("Error in inserting mock users ", error);
       });
     }
-  })
+  });
 }
 
 module.exports = fillUsers;

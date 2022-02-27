@@ -1,15 +1,15 @@
 const connection = {
-  test: {
-    HOST: "localhost",
-    PORT: 27017,
-    DB: "verifone_db_test"
-  },
-  prod: {
-    HOST: "localhost",
+  docker: {
+    HOST: "mongodb",
     PORT: 27017,
     DB: "verifone_db"
   },
   dev: {
+    HOST: "localhost",
+    PORT: 27017,
+    DB: "verifone_db"
+  },
+  test: {
     HOST: "localhost",
     PORT: 27017,
     DB: "verifone_db"
